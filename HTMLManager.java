@@ -1,55 +1,49 @@
 import java.util.*;
 
 public class HTMLManager {
-  private Queue<HTMLTag> tags;
+   private Queue<HTMLTag> tags;
   
-  public HTMLManager(Queue<HTMLTag> html){
+   public HTMLManager(Queue<HTMLTag> html){
       if (html== null){
-         throws new illegalArgumentException;
+         throw new IllegalArgumentException();
       }else{
          tags= new LinkedList<HTMLTag>();
          for(HTMLTag tag: html){
-           tags.add(tag);
+            tags.add(tag);
          }
       }
-  }    
+   }    
   
-  public Queue<HTMLTag> getTags(){
+   public Queue<HTMLTag> getTags(){
       return tags ;  
-  }
-  
-  public String toString(){
-   String newTag=""
-   for(HTMLTag tag: tags){
-      newTag+=tag;
    }
-   return newTag.trim();
-  }
-  public void fixHTML(){
-   Stack<HTMLTag>s=new Stack<HTMLTag>();
-   for (HTMLTag tag: tags){
-      HTMLTag safetag= tags.remove()
-      if(safetag.isSelfClosing()){
-      tags.add(safetag);
+  
+   public String toString(){
+      String newTag="";
+      for(HTMLTag tag: tags){
+         newTag+=tag;
       }
-      else if (safetag.isOpening()){
-        s.push(safetag);
-        tags.add(safetag);
-           
-      }else if(safetag.isClosing()){
-         HTMLtag top_val= s.peek();
-         if top_val.equals(safetag){
-            tags.add(top_val);
-            s.pop();
-         
+      return newTag.trim();
+   }
+  
+   public void fixHTML(){
+      Stack<HTMLTag>s=new Stack<HTMLTag>();
+      for (HTMLTag tag: tags){
+         HTMLTag safetag= tags.remove();
+         if(safetag.isSelfClosing()){
+            tags.add(safetag);
+         }else if (safetag.isOpening()){
+            s.push(safetag);
+            tags.add(safetag);           
+         }else if(safetag.isClosing()){
+            HTMLTag top_val= s.peek();
+            if (top_val.equals(safetag)){
+               tags.add(top_val);
+               s.pop();
+            }else if( !top_val.equals(safetag)){
             
-         }else if( !top_val.equals(safetag)){
-            
+            }
          }
       }
-   }
-  
-  
-  }
-    
+   }    
 }
