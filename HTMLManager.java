@@ -28,21 +28,28 @@ public class HTMLManager {
   
    public void fixHTML(){
       Stack<HTMLTag> s = new Stack<HTMLTag>();
-      for (HTMLTag tag : tags){
-         HTMLTag saveTag = tags.remove();
-         if(saveTag.isSelfClosing()){
-            tags.add(saveTag);
-         }else if (saveTag.isOpening()){
-            s.push(saveTag);
-            tags.add(saveTag);           
-         }else if(saveTag.isClosing()){
+      int tagsSize = tags.size();
+      for(int i = 0; i <= tagsSize; i++) {
+         HTMLTag curTag = tags.remove();
+         if(curTag.isSelfClosing()){
+            tags.add(curTag);
+         }else if (curTag.isOpening()){
+            tags.add(curTag);
+            s.push(curTag);           
+         }else if(curTag.isClosing()){
             HTMLTag topVal = s.peek();
-            if (topVal.equals(saveTag)){
-               tags.add(topVal);
+            if (topVal.equals(curTag)){
+               tags.add(curTag);
                s.pop();
-            }else if( !topVal.equals(saveTag)){
+            }else if(!topVal.equals(curTag)){
                HTMLTag closingMatch = topVal.getMatching();
                tags.add(closingMatch);
+            }
+         }else {
+            while(!s.isEmpty()) {
+               HTMLTag topTag = s.pop();
+               HTMLTag topTagMatch = curTag.getMatching();
+               tags.add(topTagMatch);
             }
          }
       }
