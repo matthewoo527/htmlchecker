@@ -8,7 +8,7 @@ public class HTMLManager {
          throw new IllegalArgumentException();
       }else{
          tags= new LinkedList<HTMLTag>();
-         for(HTMLTag tag: html){
+         for(HTMLTag tag : html){
             tags.add(tag);
          }
       }
@@ -19,29 +19,30 @@ public class HTMLManager {
    }
   
    public String toString(){
-      String newTag="";
-      for(HTMLTag tag: tags){
-         newTag+=tag;
+      String newTag = "";
+      for(HTMLTag tag : tags){
+         newTag += tag;
       }
       return newTag.trim();
    }
   
    public void fixHTML(){
-      Stack<HTMLTag>s=new Stack<HTMLTag>();
-      for (HTMLTag tag: tags){
-         HTMLTag safetag= tags.remove();
-         if(safetag.isSelfClosing()){
-            tags.add(safetag);
-         }else if (safetag.isOpening()){
-            s.push(safetag);
-            tags.add(safetag);           
-         }else if(safetag.isClosing()){
-            HTMLTag top_val= s.peek();
-            if (top_val.equals(safetag)){
-               tags.add(top_val);
+      Stack<HTMLTag> s = new Stack<HTMLTag>();
+      for (HTMLTag tag : tags){
+         HTMLTag saveTag = tags.remove();
+         if(saveTag.isSelfClosing()){
+            tags.add(saveTag);
+         }else if (saveTag.isOpening()){
+            s.push(saveTag);
+            tags.add(saveTag);           
+         }else if(saveTag.isClosing()){
+            HTMLTag topVal = s.peek();
+            if (topVal.equals(saveTag)){
+               tags.add(topVal);
                s.pop();
-            }else if( !top_val.equals(safetag)){
-            
+            }else if( !topVal.equals(saveTag)){
+               HTMLTag closingMatch = topVal.getMatching();
+               tags.add(closingMatch);
             }
          }
       }
