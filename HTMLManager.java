@@ -21,9 +21,9 @@ public class HTMLManager {
    public String toString(){
       String newTag = "";
       for(HTMLTag tag : tags){
-         newTag += tag;
+         newTag += tag.toString().trim() + " ";
       }
-      return newTag.trim();
+      return newTag;
    }
   
    public void fixHTML(){
@@ -55,5 +55,5 @@ public class HTMLManager {
          HTMLTag topTagMatch = topTag.getMatching();
          tags.add(topTagMatch);
       }
-   }    
+   }   
 }
