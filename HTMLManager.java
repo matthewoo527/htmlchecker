@@ -4,9 +4,12 @@ public class HTMLManager {
    private Queue<HTMLTag> tags;
   
    public HTMLManager(Queue<HTMLTag> html){
+      // If the html queue is null
       if (html== null){
+         // throw and IllegalArgumentException
          throw new IllegalArgumentException();
       }else{
+         // create a tags queue and add every tag into the queue
          tags= new LinkedList<HTMLTag>();
          for(HTMLTag tag : html){
             tags.add(tag);
